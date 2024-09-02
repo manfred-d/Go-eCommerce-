@@ -1,10 +1,24 @@
 package models
 
-import "gorm.io/gorm"
+import (
+	"time"
+
+	"github.com/google/uuid"
+	"gorm.io/gorm"
+)
 
 type User struct {
-	gorm.Model
-	Username string `json:"username" gorm:"unique" binding:"required"`
-	Email    string `json:"email" gorm:"unique" binding:"required"`
-	Password string `json:"password" binding:"required,min=6"`
+	ID        string `json:"id" gorm:"primaryKey;type:char(36)"`
+	Username  string `json:"username" gorm:"index" binding:"required"`
+	Name      string `json:"name"  binding:"required"`
+	Email     string `json:"email" gorm:"unique:index" binding:"required,email"`
+	Password  string `json:"password" binding:"required,min=6"`
+	CreatedAt time.Time
+	UpdatedAt time.Time
+	DeletedAt gorm.DeletedAt `gorm:"index"`
+}
+
+func (u *User) BeforeCreate(tx *gorm.DB) error {
+	u.ID = uuid.New().String()
+	return nil
 }

@@ -13,6 +13,7 @@ func SetupRoutes(router *gin.Engine, db *gorm.DB) {
 		users.GET("/", handlers.GetUsers(db))
 		users.POST("/", handlers.CreateUser(db))
 		users.GET("/:id", handlers.GetUser(db))
+		users.POST("/login", handlers.SignIn(db))
 		users.PUT("/:id", handlers.UpdateUser(db))
 		users.DELETE("/:id", handlers.DeleteUser(db))
 	}
