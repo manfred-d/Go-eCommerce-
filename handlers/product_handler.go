@@ -34,7 +34,7 @@ func GetProducts(db *gorm.DB) gin.HandlerFunc {
 		var products []models.Product
 
 		db.Find(&products)
-		ctx.JSON(http.StatusCreated, products)
+		ctx.JSON(http.StatusOK, products)
 	}
 }
 
